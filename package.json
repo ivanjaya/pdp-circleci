@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive --exit",
-    "build": "copy server.js .dist/server.js",
+    "build": "cp server.js .dist/server.js",
     "start": "node .dist/server.js"
   },
   "repository": {
