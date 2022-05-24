@@ -5,8 +5,8 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive --exit",
-    "build": "cp server.js .dist/server.js",
-    "start": "node .dist/server.js"
+    "build": "echo \'Building...\'",
+    "start": "node server.js"
   },
   "repository": {
     "type": "git",

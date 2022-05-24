@@ -15,6 +15,11 @@ jobs:
       - node/install-packages:
           check-cache: detect # try using yarn.lock
       - run: yarn run build 
+  test:
+    docker:
+      - image: 'cimg/node:16.15.0'  # can use executor by node orbs or we can set manually
+    steps:
+      - run: yarn run test
   deploy:
     docker:
       - image: 'cimg/node:16.15.0'
@@ -40,3 +45,6 @@ workflows:
       - build_with_node : # build started
           requires:
             - approve_build
+      - test : # test started
+          requires:
+            - build_with_node
