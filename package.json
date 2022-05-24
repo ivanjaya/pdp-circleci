@@ -20,8 +20,6 @@
   "homepage": "https://github.com/ivanjaya/pdp-circleci#readme",
   "dependencies": {
     "express": "^4.18.1"
-  },
-  "devDependencies": {
     "mocha": "^10.0.0"
   }
 }
