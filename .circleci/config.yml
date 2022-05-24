@@ -31,15 +31,7 @@ workflows:
   version: 2
   build-to-beta-master:   
     jobs:
-      - slack/on-hold: # hold notification and notify in slack
-          context: SLACK-SECRETS     
-          filters:
-            branches:
-              only:
-                - beta
       - approve_build: # manual approval
-          requires:            
-            - slack/on-hold
           type: approval 
       - build_with_node : # build started
           requires:
