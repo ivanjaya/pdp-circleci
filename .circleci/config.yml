@@ -2,25 +2,45 @@
 # See: https://circleci.com/docs/2.0/configuration-reference
 version: 2.1
 
-# Define a job to be invoked later in a workflow.
-# See: https://circleci.com/docs/2.0/configuration-reference/#jobs
+orbs:
+  node: circleci/node@5.0.2  # for using yarn cache automatically
+  slack: circleci/slack@4.1  # for notification to slack
 jobs:
-  say-hello:
-    # Specify the execution environment. You can specify an image from Dockerhub or use one of our Convenience Images from CircleCI's Developer Hub.
-    # See: https://circleci.com/docs/2.0/configuration-reference/#docker-machine-macos-windows-executor
+  build_with_node:
     docker:
-      - image: cimg/base:stable
-    # Add steps to the job
-    # See: https://circleci.com/docs/2.0/configuration-reference/#steps
+      - image: 'cimg/node:16.15.0'  # can use executor by node orbs or we can set manually
     steps:
       - checkout
-      - run:
-          name: "Say hello"
-          command: "echo Hello, World!"
-
-# Invoke jobs via workflows
-# See: https://circleci.com/docs/2.0/configuration-reference/#workflows
+      - run: echo "Build started on `date`"                     
+      - node/install-packages:
+          check-cache: detect # try using yarn.lock
+      - run: yarn run build 
+  deploy:
+    docker:
+      - image: 'cimg/node:16.15.0'
+    steps:
+      - run: echo "deploy my app"
+      - slack/notify:
+          event: fail
+          mentions: '@EngineeringTeam'
+          template: basic_fail_1
+      - slack/notify:
+          event: pass
+          template: success_tagged_deploy_1
 workflows:
-  say-hello-workflow:
+  version: 2
+  build-to-beta-master:   
     jobs:
-      - say-hello
+      - slack/on-hold: # hold notification and notify in slack
+          context: SLACK-SECRETS     
+          filters:
+            branches:
+              only:
+                - beta
+      - approve_build: # manual approval
+          requires:            
+            - slack/on-hold
+          type: approval 
+      - build_with_node : # build started
+          requires:
+            - approve_build
