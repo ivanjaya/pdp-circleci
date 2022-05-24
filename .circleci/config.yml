@@ -19,7 +19,14 @@ jobs:
     docker:
       - image: 'cimg/node:16.15.0'  # can use executor by node orbs or we can set manually
     steps:
-      - run: yarn run test
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run tests
+          command: |
+            circleci tests glob 'test/**/*.spec.ts' |
+            circleci tests split |
+            xargs npx mocha
   deploy:
     docker:
       - image: 'cimg/node:16.15.0'
