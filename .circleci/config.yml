@@ -32,6 +32,10 @@ workflows:
   build-to-beta-master:   
     jobs:
       - approve_build: # manual approval
+          filters:
+            branches:
+              only:
+                - beta
           type: approval 
       - build_with_node : # build started
           requires:
