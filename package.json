@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "mocha --recursive --exit",
-    "build": "echo \"Building...\"",
+    "build": "node --version",
     "start": "node server.js"
   },
   "repository": {
