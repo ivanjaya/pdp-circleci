@@ -1,0 +1,26 @@
+{
+  "name": "pdp-circleci",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "scripts": {
+    "test": "mocha --recursive --exit",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ivanjaya/pdp-circleci.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ivanjaya/pdp-circleci/issues"
+  },
+  "homepage": "https://github.com/ivanjaya/pdp-circleci#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "mocha": "^10.0.0"
+  }
+}
